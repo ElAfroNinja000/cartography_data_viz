@@ -20,12 +20,16 @@ class PopupMaker:
     def make_html_popup(self):
         soup = BeautifulSoup(self.html, "html")
         body = soup.select("tbody")
-        for metric in self.metrics:
+        for i, metric in enumerate(self.metrics):
             metric_tr = soup.new_tag("tr")
             field_td  = soup.new_tag('td')
             value_td  = soup.new_tag('td')
+
+            if i % 2 == 1:
+                metric_tr.attrs["bgcolor"] = "#d4d4d4"
             field_td.string = metric
             value_td.string = str(self.metrics[metric])
+
             metric_tr.append(field_td)
             metric_tr.append(value_td)
             body[0].append(metric_tr)
