@@ -5,6 +5,7 @@ import pandas as pd
 from make_popup import PopupMaker as pm
 
 DATA_PATH = f"{os.getcwd()}/data/"
+HTML_PATH = f"{os.getcwd()}/html/"
 METRICS   = ["population", "pop_density", "net_migration", "infant_mortality", "gdp",
              "literacy", "phones", "birth_rate", "death_rate"]
 COLORS    = ["darkred", "red", "lightred", "orange", "lightgreen", "green", "darkgreen"]
@@ -22,8 +23,8 @@ class WorldDataAnalytics:
 
     def __display_map__(self, output_name: str):
         folium.LayerControl().add_to(self.map_obj)
-        self.map_obj.save(f"{DATA_PATH}{output_name}")
-        webbrowser.open(f"{DATA_PATH}{output_name}")
+        self.map_obj.save(f"{HTML_PATH}{output_name}.html")
+        webbrowser.open(f"{HTML_PATH}{output_name}.html")
 
     def __country_data_to_popup__(self, country_name: str, country_metrics: dict):
         popup_text = pm(country_name, country_metrics).make_html_popup()
@@ -46,10 +47,9 @@ class WorldDataAnalytics:
                                         popup).add_to(feature_group)
 
             feature_group.add_to(self.map_obj)
-        self.__display_map__(f"{self.output_file}.html")
+        self.__display_map__(self.output_file)
 
 
 if __name__ == "__main__":
-    for metric in METRICS:
-        wda = WorldDataAnalytics("data_by_countries.csv", metric)
-        wda.build_map_from_data(METRICS, metric)
+        wda = WorldDataAnalytics("data_by_countries.csv", METRICS[0])
+        wda.build_map_from_data(METRICS, METRICS[0])
