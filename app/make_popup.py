@@ -18,7 +18,7 @@ class PopupMaker:
                         """
 
     def make_html_popup(self):
-        soup = BeautifulSoup(self.html, "html")
+        soup = BeautifulSoup(self.html, "html.parser")
         body = soup.select("tbody")
         for i, metric in enumerate(self.metrics):
             metric_tr = soup.new_tag("tr")

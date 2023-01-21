@@ -6,6 +6,7 @@ from make_popup import PopupMaker as pm
 
 DATA_PATH = f"{os.getcwd()}/data/"
 HTML_PATH = f"{os.getcwd()}/html/"
+TILES = ["cartodbpositron", "OpenStreetMap", "Stamen Terrain", "Stamen Toner", "cartodbdark_matter"]
 METRICS_INCREASING = ["population", "net_migration", "gdp", "literacy", "phones", "birth_rate"]
 METRICS_DECREASING = ["pop_density", "infant_mortality", "death_rate"]
 COLORS    = ["darkred", "red", "lightred", "orange", "lightgreen", "green", "darkgreen"]
@@ -17,7 +18,9 @@ class WorldDataAnalytics:
         center_point = self.df[["latitude", "longitude"]].mean().values.tolist()
         south_west   = self.df[["latitude", "longitude"]].min().values.tolist()
         north_east   = self.df[["latitude", "longitude"]].max().values.tolist()
-        self.map_obj = folium.Map(location=center_point, tiles="cartodbpositron")
+        self.map_obj = folium.Map(location=center_point, tiles=TILES[0])
+        for tile in TILES:
+            folium.TileLayer(tile).add_to(self.map_obj)
         self.map_obj.fit_bounds([south_west, north_east])
         self.ranking_metric = ranking_metric
 
