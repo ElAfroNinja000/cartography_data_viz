@@ -1,7 +1,16 @@
 from bs4 import BeautifulSoup
 
 
+# We're using the BeautifulSoup library to parse the HTML string that we've already created, and then we're adding a new
+# row to the table for each metric that we want to display
 class PopupMaker:
+    """
+    This function takes in a country and a list of metrics and creates an html table with the country as the header and
+    the metrics as the rows
+
+    :param country: the name of the country
+    :param metrics: a list of metrics to be displayed in the table
+    """
     def __init__(self, country, metrics):
         self.country = country
         self.metrics = metrics
@@ -17,6 +26,11 @@ class PopupMaker:
                         </html>
                         """
 
+    """
+    This function parses the HTML string that we've already created, and then we're adding a
+    new row to the table for each metric that we want to display
+    :return: The html code for the popup.
+    """
     def make_html_popup(self):
         soup = BeautifulSoup(self.html, "html.parser")
         body = soup.select("tbody")
